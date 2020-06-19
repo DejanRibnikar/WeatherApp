@@ -84,7 +84,7 @@ namespace WeatherApp {
         private static void RefreshData() {
             for (int i = 0; i < Cities.Count; i++) {
                 Cities[i] = GetCity(Cities[i].Name);
-                Thread.Sleep(200);
+                Thread.Sleep(50);
             }
             SaveCities();
         }

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="340">
     <Grid>
         <DataGrid x:Name="DataGrid" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns >
                 <DataGridTextColumn Header="City Name" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Temperature" Binding="{Binding Main.Temp}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Wind Speed" Binding="{Binding Wind.Speed}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Weather" Binding="{Binding Weather}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Weather" Binding="{Binding Weather[0].Main}"></DataGridTextColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
