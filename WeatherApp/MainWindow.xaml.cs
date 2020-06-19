@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace WeatherApp {
     public partial class MainWindow : Window {
@@ -20,19 +21,23 @@ namespace WeatherApp {
             LoadSavedData();
             DataGrid.ItemsSource = Cities;
 
-            if (InternetAvailable() == false) {
+            if (!InternetAvailable) {
                 System.Windows.MessageBox.Show("You have no internet connection!");
                 return;
             }
+
+            RefreshData();
         }
 
-        private static bool InternetAvailable() {
-            try {
-                using (var client = new WebClient())
-                using (client.OpenRead("http://google.com/generate_204"))
-                    return true;
-            } catch {
-                return false;
+        private static bool InternetAvailable {
+            get {
+                try {
+                    using (var client = new WebClient())
+                    using (client.OpenRead("http://google.com/generate_204"))
+                        return true;
+                } catch {
+                    return false;
+                }
             }
         }
 
@@ -79,6 +84,7 @@ namespace WeatherApp {
         private static void RefreshData() {
             for (int i = 0; i < Cities.Count; i++) {
                 Cities[i] = GetCity(Cities[i].Name);
+                Thread.Sleep(200);
             }
             SaveCities();
         }
