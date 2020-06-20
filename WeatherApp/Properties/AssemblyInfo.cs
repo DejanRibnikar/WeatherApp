@@ -9,10 +9,10 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("WeatherApp")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("debug")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WeatherApp")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCopyright("Copyright ©  2020 Dejan Ribnikar")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

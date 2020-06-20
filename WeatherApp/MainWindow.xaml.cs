@@ -11,12 +11,14 @@ using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace WeatherApp {
+
     public partial class MainWindow : Window {
         private static XmlSerializer serializer;
         private static System.Collections.ObjectModel.ObservableCollection<City> Cities { get; set; }
         public MainWindow() {
             InitializeComponent();
             RefreshButton.Content = Char.ConvertFromUtf32(81);
+
             serializer = new XmlSerializer(typeof(ObservableCollection<City>));
             LoadSavedData();
             DataGrid.ItemsSource = Cities;
