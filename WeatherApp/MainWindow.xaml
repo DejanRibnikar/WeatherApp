@@ -7,11 +7,28 @@
         mc:Ignorable="d"
         Title="WeatherApp"  Height="600" Width="371" Background="#0F0F0F" WindowStyle="SingleBorderWindow" BorderThickness="0" BorderBrush="#0F0F0F" AllowsTransparency="False">
     <Window.Resources>
-        <!-- DataGridStyle -->
         <Style x:Key="DataGridBlackStyle" TargetType="{x:Type DataGrid}">
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderBlackStyle}"/>
         </Style>
-        <!-- DataGridColumnHeaderStyle -->
+
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border x:Name="Bd" BorderBrush="DarkGray" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4,4,4,4" OverridesDefaultStyle="False">
+                <TextBox x:Name="TextBox" Background="#353535" Foreground="White"/>
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="ButtonCornerRadius" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4,4,4,4" Background="#353535" BorderBrush="DarkGray" BorderThickness="0,1,1,0">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="ColumnHeaderBlackStyle" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#191919"/>
             <Setter Property="Foreground" Value="White"/>
@@ -20,7 +37,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="-5,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="21">
+        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="-5,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="City Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}"/>
@@ -38,14 +55,14 @@
                     </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="DeleteButton" Width="50" Click="DeleteButton_Click" FontFamily="Wingdings 2" FontSize="18" Padding="0" Foreground="Red" FontWeight="Light" Background="#191919">V</Button>
+                            <Button x:Name="DeleteButton" Width="50" Click="DeleteButton_Click" FontFamily="Wingdings 2" FontSize="18" Padding="0,0,0,3" Foreground="Red" FontWeight="Light" Background="#191919">V</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddCityButton" Content="Add city" HorizontalAlignment="Right" Margin="15,15" VerticalAlignment="Bottom" Width="75" Height="23" Click="AddCityButton_Click"/>
-        <TextBox x:Name="TextBox" HorizontalAlignment="Stretch" Height="23" Margin="53,0,105,15" TextWrapping="Wrap" Text="Enter city" VerticalAlignment="Bottom" GotFocus="TextBox_GotFocus" KeyDown="TextBox_KeyDown" />
-        <Button x:Name="RefreshButton" HorizontalAlignment="Left" Margin="15,0,0,15" VerticalAlignment="Bottom" Width="23" Height="23" FontFamily="Webdings" FontSize="20" Content="q" Click="RefreshButton_Click"/>
+        <Button x:Name="AddCityButton" Style="{StaticResource ButtonCornerRadius}"  Content="Add city" Foreground="White" HorizontalAlignment="Right" Margin="15,15" VerticalAlignment="Bottom" Width="75" Height="23" Click="AddCityButton_Click"/>
+        <TextBox x:Name="TextBox" Template="{StaticResource TextBoxBaseControlTemplate}" Foreground="White" BorderThickness="1" BorderBrush="DarkGray" HorizontalAlignment="Stretch" Height="23" Margin="53,0,105,15" TextWrapping="Wrap" Text="Enter city" VerticalAlignment="Bottom" GotFocus="TextBox_GotFocus" KeyDown="TextBox_KeyDown"/>
+        <Button x:Name="RefreshButton" Style="{StaticResource ButtonCornerRadius}" Background="#FF1F1F1F" Foreground="White" HorizontalAlignment="Left" Margin="15,0,0,15" VerticalAlignment="Bottom" Width="23" Height="23" FontFamily="Webdings" FontSize="20" Content="q" Click="RefreshButton_Click"/>
     </Grid>
 </Window>
