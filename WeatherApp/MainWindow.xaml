@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="WeatherApp"  Height="600" Width="371" Background="#0F0F0F" WindowStyle="SingleBorderWindow" BorderThickness="0" BorderBrush="#0F0F0F" AllowsTransparency="False">
+        Title="WeatherApp"  Height="600" Width="470" Background="#0F0F0F" WindowStyle="SingleBorderWindow" BorderThickness="0" BorderBrush="#0F0F0F" AllowsTransparency="False">
     <Window.Resources>
         <Style x:Key="DataGridBlackStyle" TargetType="{x:Type DataGrid}">
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderBlackStyle}"/>
         </Style>
 
-        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
-            <Border x:Name="Bd" BorderBrush="DarkGray" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4,4,4,4" OverridesDefaultStyle="False">
-                <TextBox x:Name="TextBox" Background="#353535" Foreground="White"/>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBox}">
+            <Border x:Name="Bd" BorderBrush="DarkGray" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4,4,4,4">
+                <TextBox x:Name="TextBox" Background="#353535" Foreground="White" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
             </Border>
         </ControlTemplate>
 
@@ -30,10 +30,13 @@
         </Style>
         
         <Style x:Key="ColumnHeaderBlackStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#191919"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="DarkGray"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="100"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -47,10 +50,9 @@
                     <DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="#191919"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
-                            <Setter Property="Content" Value="Delete"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="DarkGray"/>
+                            <Setter Property="Width" Value="50"/>
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate>
