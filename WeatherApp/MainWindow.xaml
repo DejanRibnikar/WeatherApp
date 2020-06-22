@@ -5,8 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="WeatherApp"  Height="600" Width="470" Background="#0F0F0F" WindowStyle="SingleBorderWindow" BorderThickness="0" BorderBrush="#0F0F0F" AllowsTransparency="False">
+        Title="WeatherApp" Style="{DynamicResource MainWindow}" Foreground="White" Height="600" Width="470" Background="Black" WindowStyle="None" BorderThickness="0" AllowsTransparency="True" ResizeMode="CanResize" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
+        <Style x:Key="RectBorderStyle" TargetType="Rectangle">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Fill" Value="Transparent" />
+            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="Resize_Init"/>
+            <EventSetter Event="MouseLeftButtonUp" Handler="Resize_End"/>
+            <EventSetter Event="MouseMove" Handler="Resizing_Form"/>
+        </Style>
+        <!-- MainWindow Style -->
+        <Style x:Key="MainWindow" TargetType="{x:Type Window}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Grid>
+                            <Border x:Name="MainWindowBorder" BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" CornerRadius="2" Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, UpdateSourceTrigger=PropertyChanged}">
+                                <DockPanel LastChildFill="True">
+                                    <Rectangle x:Name="PART_LEFT_BORDER" Width="2" Cursor="SizeWE">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="Transparent"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="PART_RIGHT_BORDER" Cursor="SizeWE" Width="2" DockPanel.Dock="Right">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="Transparent"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="PART_TOP_BORDER" Cursor="SizeNS" Width="2" DockPanel.Dock="Top">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="Transparent"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="PART_BOTTOM_BORDER" Cursor="SizeNS" Width="2" DockPanel.Dock="Bottom">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="Transparent"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Border x:Name="PART_TITLEBAR" Margin="2,0,2,2" Height="40" DockPanel.Dock="Top" CornerRadius="2" Background="Transparent">
+                                        <DockPanel LastChildFill="False">
+                                            <TextBlock Margin="8,0,0,4" VerticalAlignment="Center" FontStretch="UltraExpanded" Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}" FontSize="16"/>
+                                            <Button x:Name="PART_CLOSE" DockPanel.Dock="Right" Style="{DynamicResource FlatButton}" VerticalAlignment="Center" Margin="0,0,4,0" Click="PART_CLOSE_Click"  Background="Black" BorderThickness="0">
+                                                <Image Source="close-window.png" Stretch="None" Margin="6"/>
+                                            </Button>
+                                            <Button x:Name="PART_MAXIMIZE_RESTORE" DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource FlatButton}" Click="PART_MAXIMIZE_RESTORE_Click"  Background="Black" BorderThickness="0">
+                                                <Image x:Name="MaximizeRestoreImage" Source="maximize-window.png" Stretch="None" Margin="6"/>
+                                            </Button>
+                                            <Button x:Name="PART_MINIMIZE" DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource FlatButton}" Click="PART_MINIMIZE_Click" Background="Black" BorderThickness="0">
+                                                <Image Source="minimize-window.png" Stretch="None" Margin="6"/>
+                                            </Button>
+                                        </DockPanel>
+                                    </Border>                                    
+                                    <!-- Title bar separator -->
+                                    <Border Height="1" DockPanel.Dock="Top" Background="{DynamicResource MainWindowTitleBarSeparator}"/>
+                                    <!-- Window content -->
+                                    <AdornerDecorator DockPanel.Dock="Bottom">
+                                        <ContentPresenter/>
+                                    </AdornerDecorator>
+                                </DockPanel>
+                            </Border>
+                            <!-- Resizable borders -->
+                            <Rectangle x:Name="leftSizeGrip" Width="7" HorizontalAlignment="Left" Cursor="SizeWE" Style="{StaticResource RectBorderStyle}"/>
+                            <Rectangle x:Name="rightSizeGrip" Width="7" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource RectBorderStyle}" />
+                            <Rectangle x:Name="topSizeGrip" Height="7" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource RectBorderStyle}" />
+                            <Rectangle x:Name="bottomSizeGrip" Height="7" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource RectBorderStyle}" />
+                            <!--  Corners  -->
+                            <Rectangle Name="topLeftSizeGrip" Width="7" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource RectBorderStyle}" />
+                            <Rectangle Name="bottomRightSizeGrip" Width="7" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource RectBorderStyle}" />
+                            <Rectangle Name="topRightSizeGrip" Width="7" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}" />
+                            <Rectangle Name="bottomLeftSizeGrip" Width="7" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Maximized}" Value="False">
+                                <Setter TargetName="MaximizeRestoreImage" Property="Source" Value="maximize-window.png"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="DataGridBlackStyle" TargetType="{x:Type DataGrid}">
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderBlackStyle}"/>
         </Style>
@@ -40,7 +120,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="-5,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
+        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="City Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}"/>

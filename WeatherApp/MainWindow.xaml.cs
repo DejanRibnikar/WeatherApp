@@ -10,6 +10,8 @@ using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows.Media;
+using System.Text;
+using System.Windows.Shapes;
 
 namespace WeatherApp {
 
@@ -137,6 +139,86 @@ namespace WeatherApp {
             City cityToDelete = ((FrameworkElement)sender).DataContext as City;
             Cities.Remove(cityToDelete);
             SaveCities();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            if (e.OriginalSource.ToString() != "System.Windows.Shapes.Rectangle") {
+                this.DragMove();
+            }            
+        }
+
+        private void PART_MAXIMIZE_RESTORE_Click(object sender, RoutedEventArgs e) {
+            if (this.WindowState == System.Windows.WindowState.Normal) {
+                this.WindowState = System.Windows.WindowState.Maximized;
+            } else {
+                this.WindowState = System.Windows.WindowState.Normal;
+            }
+            
+        }
+
+        private void PART_MINIMIZE_Click(object sender, RoutedEventArgs e) {
+            this.WindowState = System.Windows.WindowState.Minimized;
+        }
+
+        private void PART_CLOSE_Click(object sender, RoutedEventArgs e) {
+            this.Close();
+        }
+
+        bool Resizing = false;
+        private void Resize_Init(object sender, MouseButtonEventArgs e) {
+            Rectangle senderRect = sender as Rectangle;
+            if (sender != null) {
+                Resizing = true;
+                senderRect.CaptureMouse();
+            }
+        }
+
+        private void Resize_End(object sender, MouseButtonEventArgs e) {
+            Rectangle senderRect = sender as Rectangle;
+            if (senderRect != null) {
+                Resizing = false; ;
+                senderRect.ReleaseMouseCapture();
+            }
+        }
+
+        private void Resizing_Form(object sender, System.Windows.Input.MouseEventArgs e) {
+            if (Resizing) {
+                Rectangle senderRect = sender as Rectangle;
+                Window mainWindow = senderRect.Tag as Window;
+                if (senderRect != null) {
+                    double width = e.GetPosition(mainWindow).X;
+                    double height = e.GetPosition(mainWindow).Y;
+                    senderRect.CaptureMouse();
+                    if (senderRect.Name.ToLower().Contains("right")) {
+                        width += 5;
+                        if (width > 0) { 
+                            mainWindow.Width = width;
+                        }
+                    }
+                    if (senderRect.Name.ToLower().Contains("left")) {
+                        width -= 5;
+                        mainWindow.Left += width;
+                        width = mainWindow.Width - width;
+                        if (width > 0) {
+                            mainWindow.Width = width;
+                        }
+                    }
+                    if (senderRect.Name.ToLower().Contains("bottom")) {
+                        height += 5;
+                        if (height > 0) {
+                            mainWindow.Height = height;
+                        }
+                    }
+                    if (senderRect.Name.ToLower().Contains("top")) {
+                        height -= 5;
+                        mainWindow.Top += height;
+                        height = mainWindow.Height - height;
+                        if (height > 0) {
+                            mainWindow.Height = height;
+                        }
+                    }
+                }
+            }
         }
     }
 }
