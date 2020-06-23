@@ -9,8 +9,6 @@ using System.Windows.Input;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Threading;
-using System.Windows.Media;
-using System.Text;
 using System.Windows.Shapes;
 
 namespace WeatherApp {
@@ -18,6 +16,7 @@ namespace WeatherApp {
     public partial class MainWindow : Window {
         private static XmlSerializer serializer;
         private static System.Collections.ObjectModel.ObservableCollection<City> Cities { get; set; }
+        
         public MainWindow() {
             InitializeComponent();
 
@@ -193,13 +192,13 @@ namespace WeatherApp {
                     double height = e.GetPosition(mainWindow).Y;
                     senderRect.CaptureMouse();
                     if (senderRect.Name.ToLower().Contains("right")) {
-                        width += 5;
+                        width += 1;
                         if (width > 0) { 
                             mainWindow.Width = width;
                         }
                     }
                     if (senderRect.Name.ToLower().Contains("left")) {
-                        width -= 5;
+                        width -= 1;
                         mainWindow.Left += width;
                         width = mainWindow.Width - width;
                         if (width > 0) {
@@ -207,13 +206,13 @@ namespace WeatherApp {
                         }
                     }
                     if (senderRect.Name.ToLower().Contains("bottom")) {
-                        height += 5;
+                        height += 1;
                         if (height > 0) {
                             mainWindow.Height = height;
                         }
                     }
                     if (senderRect.Name.ToLower().Contains("top")) {
-                        height -= 5;
+                        height -= 1;
                         mainWindow.Top += height;
                         height = mainWindow.Height - height;
                         if (height > 0) {

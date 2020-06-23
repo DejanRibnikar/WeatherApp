@@ -48,13 +48,13 @@
                                         <DockPanel LastChildFill="False">
                                             <TextBlock Margin="8,0,0,4" VerticalAlignment="Center" FontStretch="UltraExpanded" Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}" FontSize="16"/>
                                             <Button x:Name="PART_CLOSE" DockPanel.Dock="Right" Style="{DynamicResource FlatButton}" VerticalAlignment="Center" Margin="0,0,4,0" Click="PART_CLOSE_Click"  Background="Black" BorderThickness="0">
-                                                <Image Source="close-window.png" Stretch="None" Margin="6"/>
+                                                <Image Source="/Images/close-window.png" Stretch="None" Margin="6"/>
                                             </Button>
                                             <Button x:Name="PART_MAXIMIZE_RESTORE" DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource FlatButton}" Click="PART_MAXIMIZE_RESTORE_Click"  Background="Black" BorderThickness="0">
-                                                <Image x:Name="MaximizeRestoreImage" Source="maximize-window.png" Stretch="None" Margin="6"/>
+                                                <Image x:Name="MaximizeRestoreImage" Source="/Images/maximize-window.png" Stretch="None" Margin="6"/>
                                             </Button>
                                             <Button x:Name="PART_MINIMIZE" DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource FlatButton}" Click="PART_MINIMIZE_Click" Background="Black" BorderThickness="0">
-                                                <Image Source="minimize-window.png" Stretch="None" Margin="6"/>
+                                                <Image Source="/Images/minimize-window.png" Stretch="None" Margin="6"/>
                                             </Button>
                                         </DockPanel>
                                     </Border>                                    
@@ -77,11 +77,6 @@
                             <Rectangle Name="topRightSizeGrip" Width="7" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}" />
                             <Rectangle Name="bottomLeftSizeGrip" Width="7" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}" />
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Maximized}" Value="False">
-                                <Setter TargetName="MaximizeRestoreImage" Property="Source" Value="maximize-window.png"/>
-                            </DataTrigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -109,27 +104,26 @@
             </Setter>
         </Style>
         
-        <Style x:Key="ColumnHeaderBlackStyle" TargetType="DataGridColumnHeader">
+        <Style x:Key="ColumnHeaderBlackStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Background" Value="DarkGray"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Height" Value="20"/>
-            <Setter Property="Width" Value="100"/>
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" MouseDown="DataGrid_MouseDown" RowHeaderWidth="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
+        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" IsReadOnly="True" MouseDown="DataGrid_MouseDown" RowHeaderWidth="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="City Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}"/>
-                <DataGridTextColumn Header="Wind Speed(m/s)" Binding="{Binding Wind.Speed}"/>
-                <DataGridTextColumn Header="Weather" Binding="{Binding Weather[0].Main}"/>
+                <DataGridTextColumn Header="City Name" Binding="{Binding Name}" Width="100"/>
+                <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}" Width="100"/>
+                <DataGridTextColumn Header="Wind Speed(m/s)" Binding="{Binding Wind.Speed}" Width="100"/>
+                <DataGridTextColumn Header="Weather" Binding="{Binding Weather[0].Main}" Width="100"/>
                 <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="DeleteButton" Width="50" Click="DeleteButton_Click" FontFamily="Wingdings 2" FontSize="18" Padding="0,0,0,3" Foreground="Red" FontWeight="Light" Background="#191919">V</Button>
+                            <Button x:Name="DeleteButton" Width="50" Click="DeleteButton_Click" FontSize="18" Padding="0,0,0,3" Foreground="Red" Background="#191919" Content="V" FontFamily="/Fonts/wingdings2.ttf#Wingdings 2"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
