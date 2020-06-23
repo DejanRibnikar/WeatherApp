@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="WeatherApp" Style="{DynamicResource MainWindow}" Foreground="White" Height="600" Width="470" Background="Black" WindowStyle="None" BorderThickness="0" AllowsTransparency="True" ResizeMode="CanResize" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        Title="WeatherApp" Style="{DynamicResource MainWindow}" Foreground="White" Height="600" Width="456" Background="Black" WindowStyle="None" BorderThickness="0" AllowsTransparency="True" ResizeMode="CanResize" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
         <Style x:Key="RectBorderStyle" TargetType="Rectangle">
             <Setter Property="Focusable" Value="False" />
@@ -120,21 +120,13 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" AlternatingRowBackground="DarkGray" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
+        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" RowHeaderWidth="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="City Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}"/>
                 <DataGridTextColumn Header="Wind Speed(m/s)" Binding="{Binding Wind.Speed}"/>
                 <DataGridTextColumn Header="Weather" Binding="{Binding Weather[0].Main}"/>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.HeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#191919"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="BorderBrush" Value="DarkGray"/>
-                            <Setter Property="Width" Value="50"/>
-                        </Style>
-                    </DataGridTemplateColumn.HeaderStyle>
+                <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="DeleteButton" Width="50" Click="DeleteButton_Click" FontFamily="Wingdings 2" FontSize="18" Padding="0,0,0,3" Foreground="Red" FontWeight="Light" Background="#191919">V</Button>

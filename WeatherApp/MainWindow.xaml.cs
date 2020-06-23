@@ -142,7 +142,7 @@ namespace WeatherApp {
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            if (e.OriginalSource.ToString().ToLower().Contains("rectangle")) {
+            if (!e.OriginalSource.ToString().ToLower().Contains("rectangle")) {
                 this.DragMove();
             }            
         }
