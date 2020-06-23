@@ -120,7 +120,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" RowHeaderWidth="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
+        <DataGrid x:Name="DataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderBlackStyle}" MouseDown="DataGrid_MouseDown" RowHeaderWidth="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" BorderThickness="0" BorderBrush="#0F0F0F" Margin="0,0,0,50" ItemsSource="{Binding Cities}" AutoGenerateColumns="False" RowBackground="#191919" Background="#191919" Foreground="White" CanUserDeleteRows="False" CanUserAddRows="False" RowHeight="23">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="City Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Temperature(°C)" Binding="{Binding Main.Temp}"/>

@@ -101,9 +101,11 @@ namespace WeatherApp {
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e) {
             TextBox.Clear();
+            DataGrid.UnselectAll();
         }
 
         private void AddCityButton_Click(object sender, RoutedEventArgs e) {
+            DataGrid.UnselectAll();
             string text = TextBox.Text;
             if (!(text.Length == 0 || text == "Enter city")) {
                 City newCity = GetCity(text);
@@ -132,6 +134,7 @@ namespace WeatherApp {
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e) {
+            DataGrid.UnselectAll();
             RefreshData();
         }
 
@@ -219,6 +222,11 @@ namespace WeatherApp {
                     }
                 }
             }
+        }
+
+        private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid.UnselectAll();
         }
     }
 }
